@@ -3,6 +3,7 @@ from odoo import api, fields, models
 class LoanApplicationTag(models.Model):
     _name = 'loan.application.tag'
     _description = 'Loan Application Tag'
+    _order = 'name asc'
 
     name = fields.Char(string='Name', required=True)
     color = fields.Integer(string='Color')

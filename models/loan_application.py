@@ -6,6 +6,7 @@ from odoo.exceptions import ValidationError
 class LoanApplication(models.Model):
     _name = 'loan.application'
     _description = 'Loan Application'
+    _order = 'date_application desc' 
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
     name = fields.Char(string='Application Number', required=True, 

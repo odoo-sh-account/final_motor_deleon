@@ -14,6 +14,7 @@
     'auto_install': False,
     'depends': ['base', 'mail', 'sale', 'product'],
     'data': [
+        'security/financing_security.xml',
         'security/motorcycle_financing_groups.xml',
         'security/ir.model.access.csv',
         'security/rules.xml',

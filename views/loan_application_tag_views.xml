@@ -5,7 +5,7 @@
         <field name="name">loan.application.tag.tree</field>
         <field name="model">loan.application.tag</field>
         <field name="arch" type="xml">
-            <list string="Loan Application Tags">
+            <list string="Loan Application Tags" default_order="name asc">
                 <field name="name"/>
                 <field name="color" widget="color_picker"/>
             </list>

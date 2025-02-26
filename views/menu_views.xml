@@ -24,6 +24,7 @@
     <menuitem id="menu_loan_configuration"
               name="Configuration"
               parent="menu_loan_root"
+              groups="group_financing_admin"
               sequence="100"/>
               
     <!-- Document Types Configuration Menu -->
