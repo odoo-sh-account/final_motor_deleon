@@ -36,6 +36,19 @@ class LoanApplication(models.Model):
         copy=False,
         tracking=True
     )
+
+    def action_send(self):
+        self.write({'state': 'sent'})
+    
+    def action_credit_check(self):
+        self.write({'state': 'review'})
+    
+    def action_approve(self):
+        self.write({'state': 'approved'})
+    
+    def action_sign(self):
+        self.write({'state': 'signed'})
+
     notes = fields.Html(string='Notes', copy=False)
     
     # New relational fields

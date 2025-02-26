@@ -13,13 +13,6 @@
               action="action_loan_application"
               sequence="10"/>
               
-    <!-- New Loan Application Menu -->
-    <menuitem id="menu_new_loan_application"
-              name="New Loan Application"
-              parent="menu_loan_root"
-              action="action_new_loan_application"
-              sequence="15"/>
-              
     <!-- Documents Menu -->
     <menuitem id="menu_loan_document"
               name="Documents"
