@@ -4,3 +4,4 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
+models/__pycache__/loan_application.cpython-312.pyc

@@ -9,8 +9,12 @@ class LoanApplication(models.Model):
     _order = 'date_application desc' 
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
-    name = fields.Char(string='Application Number', required=True, 
-                      default=lambda self: self.env['ir.sequence'].next_by_code('loan.application') or 'New')
+    name = fields.Char(
+        string='Application Number',
+        compute='_compute_application_name',
+        store=True,
+        required=True
+    )
     currency_id = fields.Many2one(
         comodel_name='res.currency', 
         string='Currency',
@@ -46,6 +50,42 @@ class LoanApplication(models.Model):
          'CHECK(loan_amount >= 0 AND down_payment >= 0)',
          'Loan amount and down payment must be positive values.'),
     ]
+
+    @api.depends('partner_id', 'product_template_id')
+    def _compute_application_name(self):
+        for record in self:
+            # Handle new records before saving
+            if not record.partner_id or not record.product_template_id:
+                record.name = "New Application"
+                continue
+                
+            # Handle existing records with partial data
+            try:
+                customer = record.partner_id.name or 'Unnamed Customer'
+                product = record.product_template_id.name or 'Unnamed Product'
+                record.name = f"{customer} - {product}"
+            except Exception:
+                record.name = "New Application"
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        applications = super().create(vals_list)
+        applications._compute_application_name()
+
+        document_types = self.env['loan.application.document.type'].search([('active', '=', True)])
+        
+        for app in applications:
+            documents = []
+            for doc_type in document_types:
+                documents.append({
+                    'name': f"{doc_type.name} Document",
+                    'application_id': app.id,
+                    'document_type_id': doc_type.id,
+                    'state': 'draft'
+                })
+            self.env['loan.application.document'].create(documents)
+        
+        return applications
 
     @api.constrains('down_payment', 'sale_order_id')
     def _check_down_payment_limit(self):
