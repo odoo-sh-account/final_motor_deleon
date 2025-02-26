@@ -11,7 +11,6 @@ class LoanApplication(models.Model):
 
     name = fields.Char(
         string='Application Number',
-        compute='_compute_application_name',
         store=True,
         required=True
     )
@@ -20,6 +19,7 @@ class LoanApplication(models.Model):
         string='Currency',
         default=lambda self: self.env.company.currency_id.id
     )
+
     date_application = fields.Date(string='Application Date', default=fields.Date.today, readonly=True, copy=False)
     date_approval = fields.Date(string='Approval Date', readonly=True, copy=False)
     date_rejection = fields.Date(string='Rejection Date', readonly=True, copy=False)
@@ -51,26 +51,9 @@ class LoanApplication(models.Model):
          'Loan amount and down payment must be positive values.'),
     ]
 
-    @api.depends('partner_id', 'product_template_id')
-    def _compute_application_name(self):
-        for record in self:
-            # Handle new records before saving
-            if not record.partner_id or not record.product_template_id:
-                record.name = "New Application"
-                continue
-                
-            # Handle existing records with partial data
-            try:
-                customer = record.partner_id.name or 'Unnamed Customer'
-                product = record.product_template_id.name or 'Unnamed Product'
-                record.name = f"{customer} - {product}"
-            except Exception:
-                record.name = "New Application"
-
     @api.model_create_multi
     def create(self, vals_list):
         applications = super().create(vals_list)
-        applications._compute_application_name()
 
         document_types = self.env['loan.application.document.type'].search([('active', '=', True)])
         
@@ -161,7 +144,12 @@ class LoanApplication(models.Model):
     # New relational fields
     document_ids = fields.One2many('loan.application.document', 'application_id', string='Documents')
     tag_ids = fields.Many2many('loan.application.tag', string='Tags')
-    partner_id = fields.Many2one('res.partner', string='Customer')
+    partner_id = fields.Many2one(
+        comodel_name='res.partner',
+        string='Customer',
+        required=True,
+        help='Linked customer record'
+    )
     sale_order_id = fields.Many2one('sale.order', string='Related Sale Order')
     user_id = fields.Many2one('res.users', string='Salesperson')
     product_template_id = fields.Many2one('product.template', string='Product')
