@@ -12,6 +12,7 @@ class LoanApplication(models.Model):
     name = fields.Char(
         string='Application Number',
         store=True,
+        compute='_compute_name',
         required=True
     )
     currency_id = fields.Many2one(
@@ -19,6 +20,19 @@ class LoanApplication(models.Model):
         string='Currency',
         default=lambda self: self.env.company.currency_id.id
     )
+
+    @api.depends('partner_id', 'sale_order_id')
+    def _compute_name(self):
+        for record in self:
+            partner_name = record.partner_id.name or ''
+            
+            # Get the name of the first product from the sales order
+            if record.sale_order_id and record.sale_order_id.order_line:
+                product_name = record.sale_order_id.order_line[0].name or ''
+            else:
+                product_name = ''
+            
+            record.name = f"{partner_name} - {product_name}"
 
     date_application = fields.Date(string='Application Date', default=fields.Date.today, readonly=True, copy=False)
     date_approval = fields.Date(string='Approval Date', readonly=True, copy=False)

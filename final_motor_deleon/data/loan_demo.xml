@@ -38,21 +38,21 @@
             <field name="order_id" ref="sale_order_01"/>
             <field name="product_uom_qty">1</field>
             <field name="price_unit">15000</field>
-            <field name="name">Loan Product for Pedro Ramirez</field>
+            <field name="name">Harley-Davidson</field>
         </record>
 
         <record id="sale_order_line_02" model="sale.order.line">
             <field name="order_id" ref="sale_order_02"/>
             <field name="product_uom_qty">1</field>
             <field name="price_unit">9000</field>
-            <field name="name">Loan Product for Antoine Bourdain</field>
+            <field name="name">Kawasaki</field>
         </record>
 
         <record id="sale_order_line_03" model="sale.order.line">
             <field name="order_id" ref="sale_order_03"/>
             <field name="product_uom_qty">1</field>
             <field name="price_unit">25000</field>
-            <field name="name">Loan Product for Friedrich Keller</field>
+            <field name="name">Honda</field>
         </record>
 
         <record id="loan_01" model="loan.application">
