@@ -19,14 +19,14 @@
 
     <!-- List View -->
     <record id="view_loan_application_tree" model="ir.ui.view">
-        <field name="name">loan.application.tree</field>
+        <field name="name">loan.application.list</field>
         <field name="model">loan.application</field>
         <field name="arch" type="xml">
             <list string="Loan Applications" default_order="date_application desc" decoration-info="state == 'draft'" decoration-muted="state == 'cancel'" decoration-success="state == 'approved'" decoration-warning="state == 'review'" decoration-danger="state == 'rejected'">
                 <field name="name"/>
                 <field name="partner_id" widget="many2one" options="{'no_open': False}"/>
                 <field name="product_template_id"/>
-                <field name="sale_order_id" widget="many2one" options="{'no_open': False}"/>
+                <field name="sale_order_id" widget="many2one"/>
                 <field name="currency_id" invisible="1"/>
                 <field name="loan_amount" sum="Total Loan Amount"/>
                 <field name="down_payment" sum="Total Down Payment"/>
@@ -102,7 +102,7 @@
                                 </group>
                                 <group string="Product Information">
                                     <field name="product_template_id"/>
-                                    <field name="sale_order_id"/>
+                                    <field name="sale_order_id" widget="many2one"/>
                                 </group>
                             </group>
                         </page>
