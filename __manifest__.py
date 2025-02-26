@@ -12,7 +12,7 @@
     'installable': True,
     'application': True,
     'auto_install': False,
-    'depends': ['base'],
+    'depends': ['base', 'mail'],
     'data': [
         'security/motorcycle_financing_groups.xml',
         'security/ir.model.access.csv',
