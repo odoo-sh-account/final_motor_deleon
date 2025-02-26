@@ -14,6 +14,8 @@
     'auto_install': False,
     'depends': ['base'],
     'data': [
-
+        'data/loan_demo.xml',
+        'views/loan_application_views.xml',
+        'views/motorcycle_financing_menu.xml',
     ],
 }
