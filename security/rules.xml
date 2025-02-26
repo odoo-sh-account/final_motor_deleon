@@ -4,7 +4,7 @@
         <field name="name">Financing User cannot modify or delete signed loans</field>
         <field name="model_id" ref="model_loan_application"/>
         <field name="domain_force">[('state','not in',['signed'])]</field>
-        <field name="groups" eval="[(4, ref('moto.module_group_financing_user'))]"/>
+        <field name="groups" eval="[(4, ref('final_motor_deleon.module_group_financing_user'))]"/>
         <field name="perm_read" eval="0"/>
         <field name="perm_write" eval="1"/>
         <field name="perm_create" eval="0"/>
