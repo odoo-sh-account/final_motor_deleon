@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Categories -->
+    <record id="module_category_motorcycle_dealership" model="ir.module.category">
+        <field name="name">Motorcycle Dealership</field>
+        <field name="sequence">10</field>
+    </record>
+
+    <record id="module_category_motorcycle_financing" model="ir.module.category">
+        <field name="name">Motorcycle Financing</field>
+        <field name="parent_id" ref="module_category_motorcycle_dealership"/>
+        <field name="sequence">10</field>
+    </record>
+
+    <!-- Groups -->
+    <record id="module_group_financing_user" model="res.groups">
+        <field name="name">Motorcycle Financing User</field>
+        <field name="category_id" ref="module_category_motorcycle_financing"/>
+        <field name="implied_ids" eval="[Command.link(ref('base.group_user'))]"/>
+    </record>
+
+    <record id="module_group_financing_admin" model="res.groups">
+        <field name="name">Motorcycle Financing Admin</field>
+        <field name="category_id" ref="module_category_motorcycle_financing"/>
+        <field name="implied_ids" eval="[Command.link(ref('module_group_financing_user'))]"/>
+        <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+    </record>
+</odoo>
