@@ -1,4 +1,7 @@
 from odoo import models, fields
+from odoo.exceptions import UserError
+from odoo import api, fields, models, _
+from odoo.exceptions import ValidationError
 
 class LoanApplication(models.Model):
     _name = 'loan.application'
@@ -37,17 +40,80 @@ class LoanApplication(models.Model):
         tracking=True
     )
 
-    def action_send(self):
-        self.write({'state': 'sent'})
-    
-    def action_credit_check(self):
-        self.write({'state': 'review'})
-    
+    _sql_constraints = [
+        ('positive_amount_check',
+         'CHECK(loan_amount >= 0 AND down_payment >= 0)',
+         'Loan amount and down payment must be positive values.'),
+    ]
+
+    @api.constrains('down_payment', 'sale_order_id')
+    def _check_down_payment_limit(self):
+        for application in self:
+            if application.sale_order_id:
+                order_total = application.sale_order_id.amount_total
+                if application.down_payment > order_total:
+                    raise ValidationError(
+                        _("Down payment (₡%(down_payment)s) exceeds sales order total of ₡%(order_total)s") % {
+                            'down_payment': application.down_payment,
+                            'order_total': order_total
+                        }
+                    )
+
+    def action_send_for_approval(self):
+        self.ensure_one()
+        
+        # Document validation
+        if not self.document_ids:
+            raise UserError("Cannot send application - no documents attached")
+        
+        if any(doc.state != 'approved' for doc in self.document_ids):
+            raise UserError("Cannot send application - some documents are not approved")
+        
+        # Update state and date
+        self.write({
+            'state': 'sent',
+            'date_approval': fields.Datetime.now()
+        })
+
+        return {
+        'type': 'ir.actions.client',
+        'tag': 'display_notification',
+        'params': {
+            'title': 'Success',
+            'message': 'Application successfully sent for approval!',
+            'type': 'success',
+            'sticky': False,
+        }
+    }
+
     def action_approve(self):
-        self.write({'state': 'approved'})
-    
-    def action_sign(self):
-        self.write({'state': 'signed'})
+        self.ensure_one()
+        self.write({'state':'approved'})
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'Success',
+                'message': 'Application approved!',
+                'type': 'success',
+                'sticky': False,
+            }
+        }
+
+    def action_reject(self):
+        self.ensure_one()
+        self.write({'state':'rejected'})
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'Success',
+                'message': 'Application rejected!',
+                'type': 'success',
+                'sticky': False,
+            }
+        }
+
 
     notes = fields.Html(string='Notes', copy=False)
     

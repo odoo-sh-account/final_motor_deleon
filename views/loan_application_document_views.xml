@@ -20,6 +20,16 @@
         <field name="model">loan.application.document</field>
         <field name="arch" type="xml">
             <form string="Document">
+            <header>
+                <button name="action_approve" 
+                            string="Approve" 
+                            type="object" 
+                            class="oe_highlight"/>
+                <button name="action_reject" 
+                            string="Reject" 
+                            type="object" 
+                            class="oe_highlight"/>
+            </header>
                 <sheet>
                     <group>
                         <field name="name"/>

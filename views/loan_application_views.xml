@@ -46,27 +46,22 @@
         <field name="arch" type="xml">
             <form string="Loan Application">
                 <header>
-                    <field name="state" widget="statusbar" statusbar_visible="draft,sent,review,approved,signed"/>
-                    <button name="action_send" 
+                    <field name="state" widget="statusbar" statusbar_visible="draft,sent,review,approved,rejected,signed"/>
+                    <button name="action_send_for_approval" 
                             string="Send" 
                             type="object" 
-                            
-                            class="oe_highlight"/>
-                    <button name="action_credit_check" 
-                            string="Credit Check" 
-                            type="object" 
-                            
+                            invisible="state != 'draft'"
                             class="oe_highlight"/>
                     <button name="action_approve" 
                             string="Approve" 
                             type="object" 
                             
                             class="oe_highlight"/>
-                    <button name="action_sign" 
-                            string="Sign" 
+                    <button name="action_reject" 
+                            string="Reject" 
                             type="object" 
                             
-                            class="oe_highlight"/>
+                            class="oe_highlight"/>                         
                 </header>
                 <sheet>
                     <div class="oe_title">
