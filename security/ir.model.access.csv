@@ -1,3 +1,9 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_loan_application_admin,loan.application.admin,model_loan_application,moto.module_group_financing_admin,1,1,1,1
 access_loan_application_user,loan.application.user,model_loan_application,moto.module_group_financing_user,1,1,1,0
+access_loan_application_tag_admin,loan.application.tag.admin,model_loan_application_tag,moto.module_group_financing_admin,1,1,1,1
+access_loan_application_tag_user,loan.application.tag.user,model_loan_application_tag,moto.module_group_financing_user,1,0,0,0
+access_loan_application_document_admin,loan.application.document.admin,model_loan_application_document,moto.module_group_financing_admin,1,1,1,1
+access_loan_application_document_user,loan.application.document.user,model_loan_application_document,moto.module_group_financing_user,1,1,1,1
+access_loan_application_document_type_admin,loan.application.document.type.admin,model_loan_application_document_type,moto.module_group_financing_admin,1,1,1,1
+access_loan_application_document_type_user,loan.application.document.type.user,model_loan_application_document_type,moto.module_group_financing_user,1,0,0,0

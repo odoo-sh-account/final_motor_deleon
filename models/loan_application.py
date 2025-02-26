@@ -5,13 +5,14 @@ class LoanApplication(models.Model):
     _description = 'Loan Application'
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
-    name = fields.Char(string='Application Number', required=True)
+    name = fields.Char(string='Application Number', required=True, 
+                      default=lambda self: self.env['ir.sequence'].next_by_code('loan.application') or 'New')
     currency_id = fields.Many2one(
         comodel_name='res.currency', 
         string='Currency',
         default=lambda self: self.env.company.currency_id.id
     )
-    date_application = fields.Date(string='Application Date', readonly=True, copy=False)
+    date_application = fields.Date(string='Application Date', default=fields.Date.today, readonly=True, copy=False)
     date_approval = fields.Date(string='Approval Date', readonly=True, copy=False)
     date_rejection = fields.Date(string='Rejection Date', readonly=True, copy=False)
     date_signed = fields.Datetime(string='Signed On', readonly=True, copy=False)
@@ -36,3 +37,11 @@ class LoanApplication(models.Model):
         tracking=True
     )
     notes = fields.Html(string='Notes', copy=False)
+    
+    # New relational fields
+    document_ids = fields.One2many('loan.application.document', 'application_id', string='Documents')
+    tag_ids = fields.Many2many('loan.application.tag', string='Tags')
+    partner_id = fields.Many2one('res.partner', string='Customer')
+    sale_order_id = fields.Many2one('sale.order', string='Related Sale Order')
+    user_id = fields.Many2one('res.users', string='Salesperson')
+    product_template_id = fields.Many2one('product.template', string='Product')

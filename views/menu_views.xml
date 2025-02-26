@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Main Menu -->
+    <menuitem id="menu_loan_root"
+              name="Moto Finance"
+              web_icon="moto,static/description/icon.png"
+              sequence="10"/>
+
+    <!-- Loan Applications Menu -->
+    <menuitem id="menu_loan_application"
+              name="Loan Applications"
+              parent="menu_loan_root"
+              action="action_loan_application"
+              sequence="10"/>
+              
+    <!-- New Loan Application Menu -->
+    <menuitem id="menu_new_loan_application"
+              name="New Loan Application"
+              parent="menu_loan_root"
+              action="action_new_loan_application"
+              sequence="15"/>
+              
+    <!-- Documents Menu -->
+    <menuitem id="menu_loan_document"
+              name="Documents"
+              parent="menu_loan_root"
+              action="action_loan_application_document"
+              sequence="20"/>
+
+    <!-- Configuration Menu -->
+    <menuitem id="menu_loan_configuration"
+              name="Configuration"
+              parent="menu_loan_root"
+              sequence="100"/>
+              
+    <!-- Document Types Configuration Menu -->
+    <menuitem id="menu_loan_document_type"
+              name="Document Types"
+              parent="menu_loan_configuration"
+              action="action_loan_application_document_type"
+              sequence="10"/>
+              
+    <!-- Tags Configuration Menu -->
+    <menuitem id="menu_loan_tag"
+              name="Tags"
+              parent="menu_loan_configuration"
+              action="action_loan_application_tag"
+              sequence="20"/>
+</odoo>

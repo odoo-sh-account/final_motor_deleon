@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- List View -->
+    <record id="view_loan_application_document_list" model="ir.ui.view">
+        <field name="name">loan.application.document.list</field>
+        <field name="model">loan.application.document</field>
+        <field name="arch" type="xml">
+            <list string="Documents">
+                <field name="name"/>
+                <field name="application_id"/>
+                <field name="type_id"/>
+                <field name="state" widget="badge" decoration-info="state == 'new'" decoration-success="state == 'approved'" decoration-danger="state == 'rejected'"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_loan_application_document_form" model="ir.ui.view">
+        <field name="name">loan.application.document.form</field>
+        <field name="model">loan.application.document</field>
+        <field name="arch" type="xml">
+            <form string="Document">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="application_id"/>
+                        <field name="type_id"/>
+                        <field name="attachment" widget="binary" filename="name"/>
+                        <field name="state" widget="badge"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_loan_application_document_search" model="ir.ui.view">
+        <field name="name">loan.application.document.search</field>
+        <field name="model">loan.application.document</field>
+        <field name="arch" type="xml">
+            <search string="Search Documents">
+                <field name="name"/>
+                <field name="application_id"/>
+                <field name="type_id"/>
+                <separator/>
+                <filter string="New" name="state_new" domain="[('state', '=', 'new')]"/>
+                <filter string="Approved" name="state_approved" domain="[('state', '=', 'approved')]"/>
+                <filter string="Rejected" name="state_rejected" domain="[('state', '=', 'rejected')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Application" name="group_by_application" context="{'group_by': 'application_id'}"/>
+                    <filter string="Document Type" name="group_by_type" context="{'group_by': 'type_id'}"/>
+                    <filter string="Status" name="group_by_state" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_loan_application_document" model="ir.actions.act_window">
+        <field name="name">Documents</field>
+        <field name="res_model">loan.application.document</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first document
+            </p>
+            <p>
+                Manage documents required for loan applications.
+            </p>
+        </field>
+    </record>
+</odoo>
