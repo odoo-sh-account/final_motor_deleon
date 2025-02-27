@@ -224,7 +224,17 @@ class LoanApplication(models.Model):
 
     def action_approve(self):
         self.ensure_one()
-        self.write({'state':'approved'})
+        old_state = dict(self._fields['state'].selection).get(self.state)
+        self.write({
+            'state': 'approved',
+            'date_approval': fields.Date.today(),
+        })
+        new_state = dict(self._fields['state'].selection).get('approved')
+        # Add a detailed message to the chatter
+        self.message_post(
+            body=_("State changed from '%s' to '%s'") % (old_state, new_state),
+            subtype_id=self.env.ref('mail.mt_comment').id
+        )
         return {
             'type': 'ir.actions.client',
             'tag': 'display_notification',
@@ -238,18 +248,27 @@ class LoanApplication(models.Model):
 
     def action_reject(self):
         self.ensure_one()
-        self.write({'state':'rejected'})
+        old_state = dict(self._fields['state'].selection).get(self.state)
+        self.write({
+            'state': 'rejected',
+            'date_rejection': fields.Date.today(),
+        })
+        new_state = dict(self._fields['state'].selection).get('rejected')
+        # Add a detailed message to the chatter
+        self.message_post(
+            body=_("State changed from '%s' to '%s'") % (old_state, new_state),
+            subtype_id=self.env.ref('mail.mt_comment').id
+        )
         return {
             'type': 'ir.actions.client',
             'tag': 'display_notification',
             'params': {
-                'title': 'Success',
+                'title': 'Rejected',
                 'message': 'Application rejected!',
-                'type': 'success',
+                'type': 'warning',
                 'sticky': False,
             }
         }
-
 
     notes = fields.Html(string='Notes', copy=False)
     
