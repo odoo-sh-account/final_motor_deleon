@@ -13,6 +13,13 @@
               action="action_loan_application"
               sequence="10"/>
               
+    <!-- Sales Orders Menu -->
+    <menuitem id="menu_sale_order"
+              name="Sales Orders"
+              parent="menu_loan_root"
+              action="sale.action_orders"
+              sequence="15"/>
+              
     <!-- Documents Menu -->
     <menuitem id="menu_loan_document"
               name="Documents"

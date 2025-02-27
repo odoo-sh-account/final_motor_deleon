@@ -9,7 +9,8 @@
                 <field name="is_financed" string="Applied for loan?"/>
                 <field name="loan_application_id" 
                        invisible="not is_financed"
-                       domain="[('partner_id', '=', partner_id)]"/>
+                       domain="[('partner_id', '=', partner_id)]"
+                       context="{'default_partner_id': partner_id, 'default_sale_order_id': id}"/>
             </xpath>
             
             <!-- Add a smart button to link to loan application -->
@@ -26,16 +27,53 @@
             <xpath expr="//notebook" position="replace">
                 <notebook>
                     <page name="order_lines" string="Order Lines">
-                        {{ ... }}
+                        <field name="order_line" 
+                               widget="sale_order_lines"
+                               context="{'default_order_id': id, 'default_company_id': company_id}">
+                            <list string="Sales Order Lines" editable="bottom" decoration-info="product_type == 'motorcycle'" decoration-muted="product_type != 'motorcycle'">
+                                <field name="product_id" 
+                                       domain="[('sale_ok', '=', True)]"
+                                       context="{'default_sale_ok': True}"/>
+                                <field name="product_type" invisible="1"/>
+                                <field name="product_uom_qty"/>
+                                <field name="price_unit"/>
+                                <field name="tax_id" widget="many2many_tags"/>
+                                <field name="price_subtotal"/>
+                            </list>
+                        </field>
                     </page>
                     <page name="other_info" string="Other Information">
-                        {{ ... }}
+                        <group>
+                            <group string="Sales Information">
+                                <field name="user_id" string="Salesperson"/>
+                                <field name="team_id" string="Sales Team"/>
+                                <field name="client_order_ref" string="Customer Reference"/>
+                            </group>
+                            <group string="Invoicing">
+                                <field name="fiscal_position_id" string="Fiscal Position"/>
+                                <field name="payment_term_id" string="Payment Terms"/>
+                                <field name="company_id" groups="base.group_multi_company"/>
+                            </group>
+                        </group>
                     </page>
                     <page name="customer_signature" string="Customer Signature">
-                        {{ ... }}
+                        <group>
+                            <group string="Signature Details">
+                                <field name="signed_by" string="Signed By"/>
+                                <field name="signed_on" string="Signed On"/>
+                                <field name="signed_document" string="Signed Document" widget="binary"/>
+                            </group>
+                            <group string="Signature Instructions">
+                                <div>
+                                    <p>Please review all details before signing.</p>
+                                    <p>Electronic signature confirms agreement to all terms.</p>
+                                </div>
+                            </group>
+                        </group>
                     </page>
                     <page name="loan_applications" string="Loan Applications">
-                        <field name="loan_application_ids">
+                        <field name="loan_application_ids" 
+                               context="{'default_partner_id': partner_id, 'default_sale_order_id': id}">
                             <list string="Loan Applications">
                                 <field name="name"/>
                                 <field name="partner_id"/>
