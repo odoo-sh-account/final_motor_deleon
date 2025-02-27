@@ -115,6 +115,9 @@
                                 </list>
                             </field>
                         </page>
+                        <page string="Chatter" name="chatter">
+                            <field name="message_ids" widget="mail_thread"/>
+                        </page>
                     </notebook>
                 </sheet>
             </form>
