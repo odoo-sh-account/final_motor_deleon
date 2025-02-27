@@ -24,6 +24,7 @@
         'views/loan_application_document_type_views.xml',
         'views/loan_application_document_views.xml',
         'views/sale_order_views.xml',
+        'views/res_partner_views.xml',
         'views/menu_views.xml',
         'data/loan_demo.xml',
     ],
