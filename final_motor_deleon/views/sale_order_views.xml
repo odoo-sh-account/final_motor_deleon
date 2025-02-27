@@ -36,26 +36,15 @@
                     </page>
                     <page name="loan_applications" string="Loan Applications">
                         <field name="loan_application_ids">
-                            <kanban>
+                            <list string="Loan Applications">
                                 <field name="name"/>
-                                <field name="state"/>
-                                <templates>
-                                    <t t-name="kanban-box">
-                                        <div class="oe_kanban_global_click">
-                                            <div class="o_kanban_record_top">
-                                                <div class="o_kanban_record_title">
-                                                    <field name="name"/>
-                                                </div>
-                                            </div>
-                                            <div class="o_kanban_record_bottom">
-                                                <div class="oe_kanban_bottom_right">
-                                                    <field name="state" widget="label_selection" options="{'classes': {'draft': 'info', 'approved': 'success', 'rejected': 'danger'}}"/>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </t>
-                                </templates>
-                            </kanban>
+                                <field name="partner_id"/>
+                                <field name="loan_amount"/>
+                                <field name="interest_rate"/>
+                                <field name="loan_term"/>
+                                <field name="date_application"/>
+                                <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-muted="state == 'cancel'" decoration-success="state == 'approved'" decoration-warning="state == 'review'" decoration-danger="state == 'rejected'"/>
+                            </list>
                         </field>
                         <div class="oe_view_nocontent_smiling_face" invisible="not is_financed or loan_application_ids">
                             <p class="o_view_nocontent_text">

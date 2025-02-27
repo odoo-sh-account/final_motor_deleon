@@ -101,7 +101,7 @@
                                     <field name="user_id"/>
                                 </group>
                                 <group string="Product Information">
-                                    <field name="product_template_id"/>
+                                    <field name="product_template_id" string="Product"/>
                                     <field name="sale_order_id" widget="many2one"/>
                                 </group>
                             </group>
@@ -132,7 +132,7 @@
                 <field name="interest_rate"/>
                 <field name="partner_id"/>
                 <field name="user_id"/>
-                <field name="product_template_id"/>
+                <field name="product_template_id" string="Product"/>
                 <field name="tag_ids"/>
                 <separator/>
                 <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>

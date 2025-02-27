@@ -36,30 +36,65 @@
             <field name="state">sale</field>
         </record>
 
+        <!-- Product Category -->
+        <record id="product_category_motorcycle" model="product.category">
+            <field name="name">Motorcycles</field>
+            <field name="complete_name">Motorcycles</field>
+        </record>
+
+        <!-- Motorcycle Products -->
+        <record id="product_harley" model="product.template">
+            <field name="name">Harley-Davidson Ukko 2024</field>
+            <field name="categ_id" ref="product_category_motorcycle"/>
+            <field name="type">consu</field>
+            <field name="list_price">15000</field>
+            <field name="standard_price">12000</field>
+            <field name="default_code">HD-UKKO-2024</field>
+        </record>
+
+        <record id="product_kawasaki" model="product.template">
+            <field name="name">Kawasaki Indra 2024</field>
+            <field name="categ_id" ref="product_category_motorcycle"/>
+            <field name="type">consu</field>
+            <field name="list_price">9000</field>
+            <field name="standard_price">7000</field>
+            <field name="default_code">KW-INDRA-2024</field>
+        </record>
+
+        <record id="product_honda" model="product.template">
+            <field name="name">Honda Raijin 2024</field>
+            <field name="categ_id" ref="product_category_motorcycle"/>
+            <field name="type">consu</field>
+            <field name="list_price">25000</field>
+            <field name="standard_price">20000</field>
+            <field name="default_code">HN-RAIJIN-2024</field>
+        </record>
+
         <!-- Sales Orders with Order Lines -->
         <record id="sale_order_line_01" model="sale.order.line">
             <field name="order_id" ref="sale_order_01"/>
+            <field name="name">[HD-UKKO-2024] Harley-Davidson Ukko 2024</field>
             <field name="product_uom_qty">1</field>
             <field name="price_unit">15000</field>
-            <field name="name">Harley-Davidson</field>
         </record>
 
         <record id="sale_order_line_02" model="sale.order.line">
             <field name="order_id" ref="sale_order_02"/>
+            <field name="name">[KW-INDRA-2024] Kawasaki Indra 2024</field>
             <field name="product_uom_qty">1</field>
             <field name="price_unit">9000</field>
-            <field name="name">Kawasaki</field>
         </record>
 
         <record id="sale_order_line_03" model="sale.order.line">
             <field name="order_id" ref="sale_order_03"/>
+            <field name="name">[HN-RAIJIN-2024] Honda Raijin 2024</field>
             <field name="product_uom_qty">1</field>
             <field name="price_unit">25000</field>
-            <field name="name">Honda</field>
         </record>
 
         <record id="loan_01" model="loan.application">
             <field name="name">Pedro Ramirez - Ukko 2024</field>
+            <field name="product_template_id" ref="product_harley"/>
             <field name="partner_id" ref="partner_john"/>
             <field name="interest_rate">5.60</field>
             <field name="sale_order_id" ref="sale_order_01"/>
@@ -73,6 +108,7 @@
         <record id="loan_02" model="loan.application">
             <field name="name">Antoine Bourdain - Indra 2024</field>
             <field name="partner_id" ref="partner_antoine"/>
+            <field name="product_template_id" ref="product_kawasaki"/> 
             <field name="interest_rate">9.00</field>
             <field name="loan_amount">9000</field>
             <field name="down_payment">1800</field>
@@ -87,6 +123,7 @@
             <field name="name">Friedrich Keller - Raijin 2024</field>
             <field name="partner_id" ref="partner_friedrich"/>
             <field name="interest_rate">5.48</field>
+            <field name="product_template_id" ref="product_honda"/>
             <field name="loan_amount">25000</field>
             <field name="sale_order_id" ref="sale_order_03"/>
             <field name="down_payment">5000</field>
