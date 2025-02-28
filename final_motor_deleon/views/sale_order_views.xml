@@ -42,6 +42,9 @@
                             </list>
                         </field>
                     </page>
+                    <page name="optional_products" string="Optional Products" groups="sale.group_sale_order_optional_products">
+                        <field name="sale_order_option_ids" widget="section_and_note_one2many"/>
+                    </page>
                     <page name="other_info" string="Other Information">
                         <group>
                             <group string="Sales Information">
