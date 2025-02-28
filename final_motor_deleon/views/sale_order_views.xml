@@ -42,8 +42,8 @@
                             </list>
                         </field>
                     </page>
-                    <page name="optional_products" string="Optional Products" groups="sale.group_sale_order_optional_products">
-                        <field name="sale_order_option_ids" widget="section_and_note_one2many"/>
+                    <page name="optional_products" string="Optional Products" attrs="{'invisible': [('id', '=', False)]}">
+                        <field name="sale_order_option_ids" attrs="{'invisible': [('id', '=', False)]}" widget="section_and_note_one2many" optional="show"/>
                     </page>
                     <page name="other_info" string="Other Information">
                         <group>
