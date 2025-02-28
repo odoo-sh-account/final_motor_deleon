@@ -12,7 +12,7 @@
     'installable': True,
     'application': True,
     'auto_install': False,
-    'depends': ['base', 'mail', 'sale', 'product', 'sale_management', 'spreadsheet', 'sale_renting_spreadsheet'],
+    'depends': ['base', 'mail', 'sale', 'product', 'sale_management'],
     'data': [
         'security/financing_security.xml',
         'security/motorcycle_financing_groups.xml',
