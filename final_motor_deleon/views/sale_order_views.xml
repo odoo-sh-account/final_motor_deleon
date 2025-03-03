@@ -4,8 +4,6 @@
         <field name="name">sale.order.form.inherit</field>
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
-        <field name="mode">primary</field>
-        <field name="priority">1000</field>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='partner_id']" position="after">
                 <field name="is_financed" string="Applied for loan?"/>
@@ -26,84 +24,81 @@
                 </button>
             </xpath>
             
-            <form position="inside">
-                <notebook>
-                    <page name="order_lines" string="Order Lines">
-                        <field name="order_line" 
-                               widget="sale_order_lines"
-                               context="{'default_order_id': id, 'default_company_id': company_id}">
-                            <list string="Sales Order Lines" editable="bottom" decoration-info="product_type == 'motorcycle'" decoration-muted="product_type != 'motorcycle'">
-                                <field name="product_id" 
-                                       domain="[('sale_ok', '=', True)]"
-                                       context="{'default_sale_ok': True}"/>
-                                <field name="product_type" invisible="1"/>
-                                <field name="product_uom_qty"/>
-                                <field name="price_unit"/>
-                                <field name="tax_id" widget="many2many_tags"/>
-                                <field name="price_subtotal"/>
-                            </list>
-                        </field>
-                    </page>
-                    <page name="optional_products" string="Optional Products" invisible="id == False">
-                        <field name="sale_order_option_ids" invisible="id == False" widget="section_and_note_one2many" optional="show"/>
-                    </page>
-                    <page name="other_info" string="Other Information">
-                        <group>
-                            <group string="Sales Information">
-                                <field name="user_id" string="Salesperson"/>
-                                <field name="team_id" string="Sales Team"/>
-                                <field name="client_order_ref" string="Customer Reference"/>
-                            </group>
-                            <group string="Invoicing">
-                                <field name="fiscal_position_id" string="Fiscal Position"/>
-                                <field name="payment_term_id" string="Payment Terms"/>
-                                <field name="company_id" groups="base.group_multi_company"/>
-                            </group>
+            <xpath expr="//notebook" position="inside">
+                <page name="order_lines" string="Order Lines">
+                    <field name="order_line" 
+                           widget="sale_order_lines"
+                           context="{'default_order_id': id, 'default_company_id': company_id}">
+                        <list string="Sales Order Lines" editable="bottom" decoration-info="product_type == 'motorcycle'" decoration-muted="product_type != 'motorcycle'">
+                            <field name="product_id" 
+                                   domain="[('sale_ok', '=', True)]"
+                                   context="{'default_sale_ok': True}"/>
+                            <field name="product_type" invisible="1"/>
+                            <field name="product_uom_qty"/>
+                            <field name="price_unit"/>
+                            <field name="tax_id" widget="many2many_tags"/>
+                            <field name="price_subtotal"/>
+                        </list>
+                    </field>
+                </page>
+                <page name="optional_products" string="Optional Products" invisible="id == False">
+                    <field name="sale_order_option_ids" invisible="id == False" widget="section_and_note_one2many" optional="show"/>
+                </page>
+                <page name="other_info" string="Other Information">
+                    <group>
+                        <group string="Sales Information">
+                            <field name="user_id" string="Salesperson"/>
+                            <field name="team_id" string="Sales Team"/>
+                            <field name="client_order_ref" string="Customer Reference"/>
                         </group>
-                    </page>
-                    <page name="customer_signature" string="Customer Signature">
-                        <group>
-                            <group string="Signature Details">
-                                <field name="signed_by" string="Signed By"/>
-                                <field name="signed_on" string="Signed On"/>
-                                <field name="signed_document" string="Signed Document" widget="binary"/>
-                            </group>
-                            <group string="Signature Instructions">
-                                <div>
-                                    <p>Please review all details before signing.</p>
-                                    <p>Electronic signature confirms agreement to all terms.</p>
-                                </div>
-                            </group>
+                        <group string="Invoicing">
+                            <field name="fiscal_position_id" string="Fiscal Position"/>
+                            <field name="payment_term_id" string="Payment Terms"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
                         </group>
-                    </page>
-                    <page name="loan_applications" string="Loan Applications">
-                        <field name="loan_application_ids" 
-                               context="{'default_partner_id': partner_id, 'default_sale_order_id': id}">
-                            <list string="Loan Applications">
-                                <field name="name"/>
-                                <field name="partner_id"/>
-                                <field name="loan_amount"/>
-                                <field name="interest_rate"/>
-                                <field name="loan_term"/>
-                                <field name="date_application"/>
-                                <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-muted="state == 'cancel'" decoration-success="state == 'approved'" decoration-warning="state == 'review'" decoration-danger="state == 'rejected'"/>
-                            </list>
-                        </field>
-                        <div class="oe_view_nocontent_smiling_face" invisible="not is_financed or loan_application_ids">
-                            <p class="o_view_nocontent_text">
-                                No loan applications found for this sales order.
-                            </p>
-                            <p>
-                                <button name="action_create_loan_application" 
-                                        type="object" 
-                                        string="Create Loan Application" 
-                                        class="oe_highlight oe_read_only"
-                                        invisible="not is_financed"/>
-                            </p>
-                        </div>
-                    </page>
-                </notebook>
-            </form>
+                    </group>
+                </page>
+            </xpath>
+            
+            <xpath expr="//notebook/page[@name='other_info']" position="after">
+                <page name="customer_signature" string="Customer Signature">
+                    <group>
+                        <group string="Signature Details">
+                            <field name="signed_by" string="Signed By"/>
+                            <field name="signed_on" string="Signed On"/>
+                            <field name="signed_document" string="Signed Document" widget="binary"/>
+                        </group>
+                        <group string="Signature Instructions">
+                            <div>
+                                <p>Please review all details before signing.</p>
+                                <p>Electronic signature confirms agreement to all terms.</p>
+                            </div>
+                        </group>
+                    </group>
+                </page>
+                <page name="loan_applications" string="Loan Applications" invisible="not is_financed">
+                    <field name="loan_application_ids" 
+                           context="{'default_partner_id': partner_id, 'default_sale_order_id': id}">
+                        <list string="Loan Applications">
+                            <field name="name"/>
+                            <field name="partner_id"/>
+                            <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-muted="state == 'cancel'" decoration-success="state == 'approved'" decoration-warning="state == 'review'" decoration-danger="state == 'rejected'"/>
+                            
+                        </list>
+                    </field>
+                    <div class="oe_view_nocontent_smiling_face" invisible="loan_application_ids">
+                        <p class="o_view_nocontent_text">
+                            No loan applications found for this sales order.
+                        </p>
+                        <p>
+                            <button name="action_create_loan_application" 
+                                    type="object" 
+                                    string="Create Loan Application" 
+                                    class="oe_highlight oe_read_only"/>
+                        </p>
+                    </div>
+                </page>
+            </xpath>
         </field>
     </record>
 </odoo>

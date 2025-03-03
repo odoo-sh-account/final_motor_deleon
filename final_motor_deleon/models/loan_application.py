@@ -277,3 +277,4 @@ class LoanApplication(models.Model):
     tag_ids = fields.Many2many('loan.application.tag', string='Tags')
     user_id = fields.Many2one('res.users', string='Salesperson')
     product_template_id = fields.Many2one('product.template', string='Product')
+    sales_order_id = fields.Many2one('sale.order', string='Sales Order')

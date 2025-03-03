@@ -4,6 +4,25 @@ from odoo.exceptions import UserError
 class SaleOrderInherit(models.Model):
     _inherit = 'sale.order'
 
+    # Non-stored computed fields to satisfy Enterprise references
+    spreadsheet_template_id = fields.Many2one(
+        'ir.attachment',
+        compute='_compute_enterprise_fields',
+        store=False
+    )
+    spreadsheet_id = fields.Many2one(
+        'ir.attachment',
+        compute='_compute_enterprise_fields', 
+        store=False
+    )
+
+    @api.depends()
+    def _compute_enterprise_fields(self):
+        """Dummy computation for Enterprise compatibility"""
+        for record in self:
+            record.spreadsheet_template_id = False
+            record.spreadsheet_id = False
+
     def action_view_loan_application(self):
         self.ensure_one()
         return {
