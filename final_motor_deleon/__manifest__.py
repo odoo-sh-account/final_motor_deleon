@@ -1,7 +1,6 @@
 {
     'name': 'Moto-loan',
     'version': '18.0.0.0.1',
-    'post_init_hook': 'uninstall_hook', #Declared in __init__.py
     'category': 'Kawiil/Custom Modules',
     'license': 'OPL-1',
     'summary': 'Streamlines the loan application process for dealerships. Alejandro De León',
