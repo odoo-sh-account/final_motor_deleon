@@ -8,7 +8,7 @@ class LoanApplication(models.Model):
     _description = 'Loan Application'
     _order = 'date_application desc' 
     _inherit = ['mail.thread', 'mail.activity.mixin']
-    _auto = False  # Temporary flag for safe removal
+
 
     @api.model
     def _auto_init(self):
