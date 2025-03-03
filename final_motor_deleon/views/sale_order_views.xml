@@ -113,7 +113,6 @@
         <field name="priority">1001</field>
         <field name="arch" type="xml">
             <!-- Remove both problematic fields -->
-            <xpath expr="//field[@name='spreadsheet_template_id']" position="replace"/>
             <xpath expr="//field[@name='spreadsheet_id']" position="replace"/>
 </field>
     </record>
