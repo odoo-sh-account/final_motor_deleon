@@ -4,6 +4,14 @@ from odoo.exceptions import UserError
 class SaleOrderInherit(models.Model):
     _inherit = 'sale.order'
 
+    # Add placeholder field, just to get rid of the error
+    spreadsheet_template_id = fields.Many2one(
+        'spreadsheet.template',  # Use any existing model
+        string='Spreadsheet Template',
+        readonly=True,
+        help="Dummy field to resolve Enterprise dependency"
+    )
+
     def action_view_loan_application(self):
         self.ensure_one()
         return {
