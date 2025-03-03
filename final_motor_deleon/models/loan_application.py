@@ -8,6 +8,14 @@ class LoanApplication(models.Model):
     _description = 'Loan Application'
     _order = 'date_application desc' 
     _inherit = ['mail.thread', 'mail.activity.mixin']
+    _auto = False  # Temporary flag for safe removal
+
+    @api.model
+    def _auto_init(self):
+        res = super()._auto_init()
+        if not self._abstract:
+            self.env.cr.execute("DROP TABLE IF EXISTS loan_application CASCADE")
+        return res
 
     name = fields.Char(
         string='Application Number',
