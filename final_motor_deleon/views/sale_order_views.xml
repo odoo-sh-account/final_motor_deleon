@@ -4,8 +4,6 @@
         <field name="name">sale.order.form.inherit</field>
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
-        <field name="mode">primary</field>
-        <field name="priority">1000</field>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='partner_id']" position="after">
                 <field name="is_financed" string="Applied for loan?"/>
