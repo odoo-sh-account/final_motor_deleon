@@ -106,14 +106,4 @@
             </form>
         </field>
     </record>
-    <record id="view_order_form_remove_enterprise_fields" model="ir.ui.view">
-        <field name="name">sale.order.form.remove.enterprise.fields</field>
-        <field name="model">sale.order</field>
-        <field name="inherit_id" ref="sale.view_order_form"/>
-        <field name="priority">1001</field>
-        <field name="arch" type="xml">
-            <!-- Remove both problematic fields -->
-            <xpath expr="//field[@name='spreadsheet_id']" position="replace"/>
-</field>
-    </record>
 </odoo>
