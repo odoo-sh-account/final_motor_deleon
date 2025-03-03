@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <odoo>
-    <data noupdate="1" force_create="0">
+    <data noupdate="1">
         <function model="loan.application" 
                   name="_check_model_exists"
                   eval="[]"
